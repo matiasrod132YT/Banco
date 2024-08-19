@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RodBank - Login y Registro</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+    <div id="content_container">
+        <h2 id="form_header">RodBank</h2>
+        
+        <!-- Login Form -->
+        <div id="login_form" class="form">
+            <input type="email" id="login_email" placeholder="Email">
+            <input type="password" id="login_password" placeholder="Contraseña">
+            <button onclick="login()">Login</button>
+            <div id="form_toggle" onclick="toggleForm()">¿No tienes cuenta? Regístrate</div>
+        </div>
+
+        <!-- Register Form -->
+        <div id="register_form" class="form hidden">
+            <input type="text" id="register_full_name" placeholder="Nombre Completo">
+            <input type="email" id="register_email" placeholder="Email">
+            <input type="password" id="register_password" placeholder="Contraseña">
+            <button onclick="register()">Registrarse</button>
+            <div id="form_toggle" onclick="toggleForm()">¿Ya tienes cuenta? Inicia sesión</div>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

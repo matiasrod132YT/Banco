@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RodBank - Dashboard</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+    <div id="dashboard_container">
+        <header>
+            <h1>RodBank Dashboard</h1>
+            <button id="logout_button" onclick="logout()">Cerrar sesión</button>
+        </header>
+        
+        <main>
+            <section id="account_info">
+                <h2>Información de la Cuenta</h2>
+                <p>Nombre: <span id="user_name"></span></p>
+                <p>Saldo: <span id="user_balance"></span></p>
+            </section>
+
+            <section id="transactions">
+                <h2>Transacciones</h2>
+                <button onclick="showTransactionForm('deposit')">Depositar Dinero</button>
+                <button onclick="showTransactionForm('withdraw')">Retirar Dinero</button>
+                <div id="transaction_form" class="hidden">
+                    <input type="number" id="transaction_amount" placeholder="Monto" />
+                    <button onclick="processTransaction()">Confirmar</button>
+                </div>
+            </section>
+
+            <section id="credit_requests_section">
+                <h2>Solicitar Crédito</h2>
+                <input type="number" id="credit_amount" placeholder="Monto del Crédito" />
+                <input type="text" id="credit_reason" placeholder="Motivo" />
+                <button onclick="requestCredit()">Solicitar Crédito</button>
+            </section>
+
+            <section id="admin_actions" class="hidden">
+                <h2>Solicitudes de Crédito</h2>
+                <button onclick="viewCreditRequests()">Ver Solicitudes de Crédito</button>
+                <ul id="credit_requests_list">
+                    <!-- Aquí se agregarán las solicitudes de crédito -->
+                </ul>
+            </section>
+        </main>
+    </div>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+    <script src="dashboard.js"></script>
+</body>
+</html>
