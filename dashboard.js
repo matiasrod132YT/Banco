@@ -153,15 +153,37 @@ function viewCreditRequests() {
 }
 
 // Función para aprobar solicitud de crédito
+// Función para aprobar solicitud de crédito
 function approveCreditRequest(userId, requestId) {
     const requestRef = database.ref('credit_requests/' + userId + '/' + requestId);
-    requestRef.update({ status: 'approved' }).then(() => {
-        Swal.fire('Éxito', 'Solicitud de crédito aprobada', 'success');
-        viewCreditRequests(); // Refrescar lista
+    requestRef.once('value').then(snapshot => {
+        const requestData = snapshot.val();
+        const amount = requestData.amount;
+
+        // Actualiza el estado de la solicitud a aprobado
+        requestRef.update({ status: 'approved' }).then(() => {
+            // Actualiza el saldo del usuario
+            const userRef = database.ref('users/' + userId);
+            userRef.once('value').then(userSnapshot => {
+                const userData = userSnapshot.val();
+                const newBalance = (userData.balance || 0) + amount;
+                userRef.update({ balance: newBalance }).then(() => {
+                    Swal.fire('Éxito', 'Solicitud de crédito aprobada y saldo actualizado', 'success');
+                    viewCreditRequests(); // Refrescar lista
+                }).catch(error => {
+                    Swal.fire('Error', error.message, 'error');
+                });
+            }).catch(error => {
+                Swal.fire('Error', error.message, 'error');
+            });
+        }).catch(error => {
+            Swal.fire('Error', error.message, 'error');
+        });
     }).catch(error => {
         Swal.fire('Error', error.message, 'error');
     });
 }
+
 
 // Función para rechazar solicitud de crédito
 function rejectCreditRequest(userId, requestId) {
